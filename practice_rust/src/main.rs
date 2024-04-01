@@ -1,123 +1,138 @@
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Match statements
+// Struct size
 // /summary/
+
+use std::mem::size_of_val;
+
+struct Numbers { 
+    one: u8,
+    two: u8,
+    three: u8,
+    four: u8
+}
+
+#[derive(Debug)]
+struct Country {
+    population: u32,
+    capital: String,
+    leader_name: String,
+    all_populations: [u32; 5500]
+}
 fn main() {
-    let sky = "cloudy";     //&str
-    let temperature = "warm";
+    let population = 35_000_000;
+    let capital = "Ottawa".to_string();
+    let leader_name = "Justin Trudeau".to_string();
 
-    match (sky, temperature) {
-        ("cloudy", "cold") => println!("It's not very nice today"),
-        ("clear", "warm") => println!("It's a nice day"),
-        ("cloudy", _) => println!("Cloudy and something else"),
-        _ => println!("Not sure what the weather is."),
-    }
+    //Clippy
+    let my_country = Country {
+        population,
+        capital,
+        leader_name,
+        all_populations: [500; 5500]
+    };
 
-    let children = 5;
-    let married = true;
+    println!("The country is: {:#?}", my_country);
+    println!("Country is {} bytes in size", size_of_val(&my_country));
 
-    match (children, married) {
-        (children, married) if married == false => println!("Not married with {} children", children),
-        (c, m) if c == 0 && m => println!("Married but with no children"),
-        (_, _) => println!("Some other type of marriage and children combination"),
-    }
+    let numbers = Numbers {
+        one: 8,
+        two: 19,
+        three: 20,
+        four: 30
+    };
+
+    println!("Size is: {}", size_of_val(&numbers));
 }
 
 
+
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Control flow
+// Structs
 // /summary/
-// fn main() {
-//     let my_number = 5;
-//     if my_number == 7 {
-//         println!("It's seven");
-//     } else if my_number == 6 {
-//         println!("It's six");
-//     } else {
-//         println!("It's a different number");
-//     }
 
-//     // expression-based laguage
-//     // match 
-//     let my_number2: u8 = 5;
-    
-//     let second_number = match my_number2 {  // switch
-//         0 => 23, //println!("It's a zero"),
-//         1 => 65, //println!("It's a one"),
-//         _ => 0, //println!("It's a different number")    // _ 
+//struct - and
+//enum = or
+
+// unit struct
+// struct FileDirectory;
+
+// // trait
+// // tuple struct
+// #[derive(Debug)]   // attribute
+// struct Colour(u8, u8, u8);
+
+// // named struct
+// #[derive(Debug)]
+// struct Country {
+//     population: u32,
+//     capital: String,
+//     leader_name: String,
+// }
+
+// fn takes_file_directory(input: FileDirectory) {
+//     println!("I got a file directory");
+// }
+// fn main() {
+//     //let x = FileDirectory;
+//     //takes_file_directory(x);
+//     //std::mem::size_of_val(&x);
+
+//     // let my_colour = Colour(20, 50, 100);
+//     // println!("The second colour is {:?}", my_colour.1);
+
+//     let canada = Country {
+//         population: 35_000_000,
+//         capital: "Ottawa".to_string(),
+//         leader_name: "Justin Trudeau".to_string(),  
 //     };
 
-//     println!("The second number is: {}", second_number);
+//     //println!("The population is: {:?}\nThe capital is: {:?}", canada.population, canada.capital);
+//     println!("The country is: {:#?}", canada);
 // }
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Tuples and destructuring
+// More match statements
 // /summary/
-// Vec<(String, i32)>
-// Destructuring
-// Structure
-// fn main() {
-//     let my_tuple = (8, "Dave MacLeod", vec![8, 9, 10]);
-//     let my_variable = vec![("Hey", 9), ("Hellow there", 12312)];
-//     println!("{:?}", my_tuple);
 
-//     // let str_vec = vec!["one", "two", "three"];
-//     // let (a, b, c) = str_vec;
+//rgb
 
-//     // let str_tuple = ("one", "two", "trhee");
-//     // let (a1, b1, c1) = str_tuple;
-
-//     let str_array = ["one", "two", "three"];
-
-//     let [a, b, c] = str_array;
-
-//     println!("Item a is: {}", a);
+// fn match_number(input: i32) {
+//     match input {
+//         number => println!("It's the number {}", number),
+//         number @ 0..= 10 => println!("It's between 0 and 10. It's the number {}", number),
+//         _ => println!("It's greater than ten"),
+//     }
 // }
 
-
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// From and Into
-// /summary/
-
-// trait
-// This type implements (trait name)
-//
-// From, Into
-// fn main() {
-//     let my_name = String::from("Dave MacLeod");
-//     let my_city: String = "Seoul".into();
-
-//     println!("{}", my_city);
+// fn match_colours(rgb: (u32, u32, u32)) {
+//     match rgb {
+//         (r, _, _) if r < 10 => println!("Not much red"),
+//         (_, g, _) if g < 10 => println!("Not much green"),
+//         (_, _, b) if b < 10 => println!("Not much blue"),
+//         _ => println!("Every colour has at least 10"),
+//     }
 // }
-
-
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// Vecs
-// /summary/
-
-// Vec<String>
-// Vec<u8>
-// T = some type
-// generics
-
 // fn main() {
-//     let my_string = String::new();
-//     let name1 = String::from("Windy");
-//     let name2 = String::from("Gomesy");
+//     let first = (200, 0 , 0);
+//     let second = (50, 50, 50);
+//     let third = (200, 50, 0);
 
-//     let mut my_vec = Vec::new();
-//     println!("Space for my_vec : {:?}", my_vec.capacity());     // 0
-//     my_vec.push(name1.clone());
-//     println!("Space for my_vec : {:?}", my_vec.capacity());     // reallocation
-//     my_vec.push(name2.clone());
-//     println!("Space for my_vec : {:?}", my_vec.capacity());     // reallocation
-//     println!("My cats are {:?}", my_vec);
+//     match_colours(first);
+//     match_colours(second);
+//     match_colours(third);
 
-//     let my_vec_2 = vec![name1.clone(), name2.clone()];
-//     println!("My cats are {:?}", my_vec);
+//     // let my_number = 10;
+//     // let some_variable = match my_number {
+//     //     10 => 8,
+//     //     _ => "Not ten", //다른 데이터 타입은 안됨
+//     // };
+
+//     // let other_variable = if my_number == 10 { 8 } else { "Something else" }; //다른 데이터 타입은 안됨
+
+//     match_number(10);
+//     match_number(100);
 // }

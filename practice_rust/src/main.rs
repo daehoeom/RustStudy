@@ -1,138 +1,147 @@
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// Struct size
-// /summary/
+// /////////////////////////////////////////////////////////////////////////////////////
+// // /summary/
+// // Enum 2
+// // /summary/
 
-use std::mem::size_of_val;
-
-struct Numbers { 
-    one: u8,
-    two: u8,
-    three: u8,
-    four: u8
+enum Star {
+    BrownDwarf = 10,
+    RedDwarf = 50,
+    YellowStar = 100,
+    RedGiant = 1000,
+    DeadStar,
 }
 
-#[derive(Debug)]
-struct Country {
-    population: u32,
-    capital: String,
-    leader_name: String,
-    all_populations: [u32; 5500]
+enum Number {
+    U32(u32),
+    I32(i32),
 }
+
+fn get_number(input: i32) -> Number {
+    let number = match input.is_positive() {
+        true => Number::U32(input as u32),
+        false => Number::I32(input)
+    };
+
+    number
+}
+
 fn main() {
-    let population = 35_000_000;
-    let capital = "Ottawa".to_string();
-    let leader_name = "Justin Trudeau".to_string();
+    // use Star::*;
+    // let starvec = vec![BrownDwarf, RedDwarf, YellowStar, RedGiant, DeadStar];
 
-    //Clippy
-    let my_country = Country {
-        population,
-        capital,
-        leader_name,
-        all_populations: [500; 5500]
-    };
+    // for star in starvec {
+    //     match star as u32 {
+    //         size if size <= 80 => println!("Not the biggest star: {}", size),
+    //         size if size >= 80 => println!("Pretty big star: {}", size),
+    //         _ => println!("Some other star")
+    //     }
+    // }
 
-    println!("The country is: {:#?}", my_country);
-    println!("Country is {} bytes in size", size_of_val(&my_country));
+    // println!("What about DeadStar? It is: {}", DeadStar as u32);
 
-    let numbers = Numbers {
-        one: 8,
-        two: 19,
-        three: 20,
-        four: 30
-    };
+    let my_vec = vec![get_number(-800), get_number(8)];     // Vec<Number>
 
-    println!("Size is: {}", size_of_val(&numbers));
+    for item in my_vec {
+        match item {
+            Number::U32(number) => println!("It's a u32 with val"),
+            Number::I32(number) => println!("It's a i32 with val"),
+        }
+    }
 }
 
 
 
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// Structs
-// /summary/
+// /////////////////////////////////////////////////////////////////////////////////////
+// // /summary/
+// // Enum 2
+// // /summary/
 
-//struct - and
-//enum = or
-
-// unit struct
-// struct FileDirectory;
-
-// // trait
-// // tuple struct
-// #[derive(Debug)]   // attribute
-// struct Colour(u8, u8, u8);
-
-// // named struct
-// #[derive(Debug)]
-// struct Country {
-//     population: u32,
-//     capital: String,
-//     leader_name: String,
+// enum Mood {
+//     Happy,
+//     Sleepy,
+//     NotBad,
+//     Angry
 // }
 
-// fn takes_file_directory(input: FileDirectory) {
-//     println!("I got a file directory");
-// }
-// fn main() {
-//     //let x = FileDirectory;
-//     //takes_file_directory(x);
-//     //std::mem::size_of_val(&x);
-
-//     // let my_colour = Colour(20, 50, 100);
-//     // println!("The second colour is {:?}", my_colour.1);
-
-//     let canada = Country {
-//         population: 35_000_000,
-//         capital: "Ottawa".to_string(),
-//         leader_name: "Justin Trudeau".to_string(),  
-//     };
-
-//     //println!("The population is: {:?}\nThe capital is: {:?}", canada.population, canada.capital);
-//     println!("The country is: {:#?}", canada);
+// enum Season {
+//     Spring,
+//     Summer,
+//     Autumn,
+//     Winter,
 // }
 
-
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// More match statements
-// /summary/
-
-//rgb
-
-// fn match_number(input: i32) {
-//     match input {
-//         number => println!("It's the number {}", number),
-//         number @ 0..= 10 => println!("It's between 0 and 10. It's the number {}", number),
-//         _ => println!("It's greater than ten"),
-//     }
-// }
-
-// fn match_colours(rgb: (u32, u32, u32)) {
-//     match rgb {
-//         (r, _, _) if r < 10 => println!("Not much red"),
-//         (_, g, _) if g < 10 => println!("Not much green"),
-//         (_, _, b) if b < 10 => println!("Not much blue"),
-//         _ => println!("Every colour has at least 10"),
-//     }
-// }
-// fn main() {
-//     let first = (200, 0 , 0);
-//     let second = (50, 50, 50);
-//     let third = (200, 50, 0);
-
-//     match_colours(first);
-//     match_colours(second);
-//     match_colours(third);
-
-//     // let my_number = 10;
-//     // let some_variable = match my_number {
-//     //     10 => 8,
-//     //     _ => "Not ten", //다른 데이터 타입은 안됨
+// fn match_mood(mood: &Mood) -> i32 {
+//     use Mood::*;
+//     // let happiness_level = match mood {
+//     //     // Mood::Happy => 10,
+//     //     // Mood::Sleepy => 6,
+//     //     // Mood::NotBad => 7,
+//     //     // Mood::Angry => 2
+//     //     Happy => 10,
+//     //     Sleepy => 6,
+//     //     NotBad => 7,
+//     //     Angry => 2
 //     // };
 
-//     // let other_variable = if my_number == 10 { 8 } else { "Something else" }; //다른 데이터 타입은 안됨
+//     // happiness_level
 
-//     match_number(10);
-//     match_number(100);
+//     match mood {
+//         // Mood::Happy => 10,
+//         // Mood::Sleepy => 6,
+//         // Mood::NotBad => 7,
+//         // Mood::Angry => 2
+//         Happy => 10,
+//         Sleepy => 6,
+//         NotBad => 7,
+//         Angry => 2
+//     }
+// }
+
+// fn main() {
+//     // let my_mood = Mood::NotBad;
+//     // let happiness_level = match_mood(&my_mood);
+//     // println!("Out of 1 to 10, happiness is {}", happiness_level);
+//     use Season::*;
+//     let four_seasons = vec![Spring, Summer, Autumn, Winter]; //Vec<Season>
+//     for season in four_seasons {
+//         println!("The number is: {}", season as u32);
+//     }
+// }
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// /summary/
+// Enum
+// /summary/
+
+// struct = and
+// enum(enumeration) = or
+
+// enum ThingsInTheSky {
+//     Sun,    // 0
+//     Stars,  // 1
+//     Other  // 2
+// }
+
+// fn create_skystate(time: i32) -> ThingsInTheSky {
+//     match time {
+//         6..=18 => ThingsInTheSky::Sun,
+//         _ => ThingsInTheSky::Stars,
+//     }
+// }
+
+// fn check_skystate(state: &ThingsInTheSky) {
+//     match state {
+//         ThingsInTheSky::Sun => println!("I can see the sun"),
+//         ThingsInTheSky::Stars => println!("I can see the stars"),
+//         _ => println!("I can't see anything"),
+//     }
+// }
+
+// fn main() {
+//     // let time = 8;
+//     // let sky_state = create_skystate(time);
+//     // check_skystate(&sky_state);
+
+//     check_skystate(&create_skystate(20));
 // }

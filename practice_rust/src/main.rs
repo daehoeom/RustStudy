@@ -1,147 +1,106 @@
-// /////////////////////////////////////////////////////////////////////////////////////
-// // /summary/
-// // Enum 2
-// // /summary/
+/////////////////////////////////////////////////////////////////////////////////////
+// /summary/
+// impl blocks
+// /summary/
+//for number in numbers
 
-enum Star {
-    BrownDwarf = 10,
-    RedDwarf = 50,
-    YellowStar = 100,
-    RedGiant = 1000,
-    DeadStar,
+#[derive(Debug)]
+struct Animal {
+    age: u8,
+    animal_type : AnimalType
 }
 
-enum Number {
-    U32(u32),
-    I32(i32),
+#[derive(Debug)]
+enum AnimalType {
+    Cat,
+    Dog,
 }
 
-fn get_number(input: i32) -> Number {
-    let number = match input.is_positive() {
-        true => Number::U32(input as u32),
-        false => Number::I32(input)
-    };
+impl Animal {
+    fn new(age: u8) -> Self {  // Self = Animal, function signature
 
-    number
-}
-
-fn main() {
-    // use Star::*;
-    // let starvec = vec![BrownDwarf, RedDwarf, YellowStar, RedGiant, DeadStar];
-
-    // for star in starvec {
-    //     match star as u32 {
-    //         size if size <= 80 => println!("Not the biggest star: {}", size),
-    //         size if size >= 80 => println!("Pretty big star: {}", size),
-    //         _ => println!("Some other star")
-    //     }
-    // }
-
-    // println!("What about DeadStar? It is: {}", DeadStar as u32);
-
-    let my_vec = vec![get_number(-800), get_number(8)];     // Vec<Number>
-
-    for item in my_vec {
-        match item {
-            Number::U32(number) => println!("It's a u32 with val"),
-            Number::I32(number) => println!("It's a i32 with val"),
+        Self {
+            age,
+            animal_type: AnimalType::Cat,
         }
     }
 }
 
+fn main() {
+    // let my_animal = Animal {
+    //     age: 10,
+    //     animal_type: AnimalType::Cat,
+    // };
+    let my_animal = Animal::new(10);  // associated function
 
-
-// /////////////////////////////////////////////////////////////////////////////////////
-// // /summary/
-// // Enum 2
-// // /summary/
-
-// enum Mood {
-//     Happy,
-//     Sleepy,
-//     NotBad,
-//     Angry
-// }
-
-// enum Season {
-//     Spring,
-//     Summer,
-//     Autumn,
-//     Winter,
-// }
-
-// fn match_mood(mood: &Mood) -> i32 {
-//     use Mood::*;
-//     // let happiness_level = match mood {
-//     //     // Mood::Happy => 10,
-//     //     // Mood::Sleepy => 6,
-//     //     // Mood::NotBad => 7,
-//     //     // Mood::Angry => 2
-//     //     Happy => 10,
-//     //     Sleepy => 6,
-//     //     NotBad => 7,
-//     //     Angry => 2
-//     // };
-
-//     // happiness_level
-
-//     match mood {
-//         // Mood::Happy => 10,
-//         // Mood::Sleepy => 6,
-//         // Mood::NotBad => 7,
-//         // Mood::Angry => 2
-//         Happy => 10,
-//         Sleepy => 6,
-//         NotBad => 7,
-//         Angry => 2
-//     }
-// }
-
-// fn main() {
-//     // let my_mood = Mood::NotBad;
-//     // let happiness_level = match_mood(&my_mood);
-//     // println!("Out of 1 to 10, happiness is {}", happiness_level);
-//     use Season::*;
-//     let four_seasons = vec![Spring, Summer, Autumn, Winter]; //Vec<Season>
-//     for season in four_seasons {
-//         println!("The number is: {}", season as u32);
-//     }
-// }
+    println!("I made a: {:?}", my_animal);
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Enum
+// More Loop
+// /summary/
+//for number in numbers
+// fn main() {
+//     // let mut counter = 0;
+
+//     // while counter != 5 {
+//     //     counter += 1;
+//     //     println!("The counter is now: {}", counter);
+//     // }
+
+//     for number in 0..3 {    // execlusive Range
+//         println!("The number is {}", number);
+//     }
+
+//     for number in 0..=3 {   // inclusive Range
+//         println!("The number is {}", number);
+//     }
+
+//     for _ in 0..=3 {
+//         println!("I don't need a number");
+//     }
+
+//     let mut counter = 5;
+//     let my_number = loop {
+//         counter += 1;
+//         if counter % 53 == 3 {
+//             break counter;
+//         }
+//     };
+
+//     println!("my_number is now: {}", my_number);
+// }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// /summary/
+// Loop
 // /summary/
 
-// struct = and
-// enum(enumeration) = or
+// loops
 
-// enum ThingsInTheSky {
-//     Sun,    // 0
-//     Stars,  // 1
-//     Other  // 2
-// }
-
-// fn create_skystate(time: i32) -> ThingsInTheSky {
-//     match time {
-//         6..=18 => ThingsInTheSky::Sun,
-//         _ => ThingsInTheSky::Stars,
-//     }
-// }
-
-// fn check_skystate(state: &ThingsInTheSky) {
-//     match state {
-//         ThingsInTheSky::Sun => println!("I can see the sun"),
-//         ThingsInTheSky::Stars => println!("I can see the stars"),
-//         _ => println!("I can't see anything"),
-//     }
-// }
-
+//for number in numbers
 // fn main() {
-//     // let time = 8;
-//     // let sky_state = create_skystate(time);
-//     // check_skystate(&sky_state);
 
-//     check_skystate(&create_skystate(20));
+//     let mut counter = 0;
+//     let mut counter2 = 0;
+
+//     'first_loop: loop {
+//         counter += 1;
+//         println!("The counter is now: {}", counter);
+//         if counter > 9 {
+//             println!("Now entering the second loop");
+
+//             'second_loop: loop {
+//                 println!("The second counter is: {}", counter2);
+//                 counter2 += 1;
+//                 if counter2 == 3 {
+//                     break 'first_loop;
+//                 }
+//             }
+//         }
+//     }
 // }

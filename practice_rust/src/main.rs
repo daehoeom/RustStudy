@@ -1,106 +1,179 @@
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// impl blocks
+// More destructuring
 // /summary/
-//for number in numbers
 
-#[derive(Debug)]
-struct Animal {
-    age: u8,
-    animal_type : AnimalType
+struct Person {
+    name: String,
+    real_name: String,
+    height: u8,
+    happiness: bool,
 }
 
 #[derive(Debug)]
-enum AnimalType {
-    Cat,
-    Dog,
+struct Person2 {
+    name: String,
+    height: u8,
 }
 
-impl Animal {
-    fn new(age: u8) -> Self {  // Self = Animal, function signature
+impl Person2 {
+    fn from_person(input: Person) -> Self {
+        let Person { name, height , .. } = input;
 
         Self {
-            age,
-            animal_type: AnimalType::Cat,
+            name, 
+            height,
         }
     }
 }
 
 fn main() {
-    // let my_animal = Animal {
-    //     age: 10,
-    //     animal_type: AnimalType::Cat,
-    // };
-    let my_animal = Animal::new(10);  // associated function
+    let papa_doc = Person {
+        name: "Papa Doc".to_string(),
+        real_name: "Clarence".to_string(),
+        height: 170,
+        happiness: false,
+    };
 
-    println!("I made a: {:?}", my_animal);
+    //copy
+    // let Person { name, real_name, height, happiness } = papa_doc;
+    // println!("They call him {} but his real name is {}. He is {} cm tall and is he happy? {}",
+    //     name, real_name, height, happiness);
+
+    let person2 = Person2::from_person(papa_doc);
+    println!("Person2 type is :{:?}", person2);
 }
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// More Loop
+// enum impl blocks
 // /summary/
-//for number in numbers
-// fn main() {
-//     // let mut counter = 0;
 
-//     // while counter != 5 {
-//     //     counter += 1;
-//     //     println!("The counter is now: {}", counter);
-//     // }
-
-//     for number in 0..3 {    // execlusive Range
-//         println!("The number is {}", number);
-//     }
-
-//     for number in 0..=3 {   // inclusive Range
-//         println!("The number is {}", number);
-//     }
-
-//     for _ in 0..=3 {
-//         println!("I don't need a number");
-//     }
-
-//     let mut counter = 5;
-//     let my_number = loop {
-//         counter += 1;
-//         if counter % 53 == 3 {
-//             break counter;
-//         }
-//     };
-
-//     println!("my_number is now: {}", my_number);
+// #[derive(Debug)]
+// struct Animal {
+//     age: u8,
+//     animal_type : AnimalType
 // }
 
+// #[derive(Debug)]
+// enum AnimalType {
+//     Cat(String),
+//     Dog(String),
+// }
+
+// impl AnimalType {
+//     fn print_name(&self) {
+//         match self {
+//             AnimalType::Cat(name) => println!("Animal type is cat and name is: {}", name),
+//             AnimalType::Dog(name) => println!("Animal tpye is dog and name is: {}", name),
+//         }
+//     }
+
+//     // fn check_type(&self) {
+//     //     use AnimalType::*;
+//     //     match self {
+//     //         Cat => println!("Animal type is cat"),
+//     //         Dog => println!("Animal tpye is dog"),
+//     //     }
+//     // }
+// }
+
+// impl Animal {
+//     fn new(age: u8, animalType: AnimalType) -> Self {  // Self = Animal, function signature
+
+//         Self {
+//             age,
+//             animal_type: animalType,
+//         }
+//     }
+
+//     // fn change_to_dog(&mut self) {
+//     //     self.animal_type = AnimalType::Dog;
+//     //     println!("Changed to dog! No I am: {:?}", self);
+//     // }
+
+//     // fn change_to_cat(&mut self) {
+//     //     self.animal_type = AnimalType::Cat;
+//     //     println!("Changed to cat! No I am: {:?}", self);
+//     // }
+// }
+
+// fn main() {
+//     // use AnimalType::*;
+//     // let my_cat = Animal::new(10, Cat);
+//     // let my_dog = Animal::new(10, Dog);
+
+//     // my_cat.animal_type.check_type();
+//     let my_cat = Animal::new(10, AnimalType::Cat("Windy".to_string()));
+//     my_cat.animal_type.print_name();
+// }
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Loop
+// More impl blocks
 // /summary/
 
-// loops
+// #[derive(Debug)]
+// struct Animal {
+//     age: u8,
+//     animal_type : AnimalType
+// }
 
-//for number in numbers
-// fn main() {
+// #[derive(Debug)]
+// enum AnimalType {
+//     Cat,
+//     Dog,
+// }
 
-//     let mut counter = 0;
-//     let mut counter2 = 0;
-
-//     'first_loop: loop {
-//         counter += 1;
-//         println!("The counter is now: {}", counter);
-//         if counter > 9 {
-//             println!("Now entering the second loop");
-
-//             'second_loop: loop {
-//                 println!("The second counter is: {}", counter2);
-//                 counter2 += 1;
-//                 if counter2 == 3 {
-//                     break 'first_loop;
-//                 }
-//             }
+// // C# Partial와 같은 기능
+// impl Animal {
+//     fn new_old_cat() -> Self {
+//         Self {
+//             age: 15,
+//             animal_type: AnimalType::Cat,
 //         }
 //     }
+// }
+
+// impl Animal {
+//     fn new_cat(age: u8) -> Self {  // Self = Animal, function signature
+
+//         Self {
+//             age,
+//             animal_type: AnimalType::Cat,
+//         }
+//     }
+
+//     fn new_dog(age: u8) -> Self {
+//         Self {
+//             age,
+//             animal_type: AnimalType::Dog,
+//         }
+//     }
+
+//     fn print(&self) {
+//         println!("I am a: {:?}", self);
+//     }
+
+//     fn change_to_dog(&mut self) {
+//         self.animal_type = AnimalType::Dog;
+//         println!("Changed to dog! No I am: {:?}", self);
+//     }
+
+//     fn change_to_cat(&mut self) {
+//         self.animal_type = AnimalType::Cat;
+//         println!("Changed to cat! No I am: {:?}", self);
+//     }
+// }
+
+// fn main() {
+//     let mut my_animal = Animal::new_dog(10);  
+//     my_animal.print();                  // dot operator, syntactic sugar
+//     //Animal::print(&my_animal);    // 
+//     my_animal.change_to_cat();
+//     my_animal.change_to_dog();
+
+//     let my_old_cat = Animal::new_old_cat();
 // }

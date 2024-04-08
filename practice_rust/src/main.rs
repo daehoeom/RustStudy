@@ -1,179 +1,105 @@
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// More destructuring
+// More generics
 // /summary/
 
-struct Person {
-    name: String,
-    real_name: String,
-    height: u8,
-    happiness: bool,
-}
+use std::fmt::Display;
+use std::cmp::PartialOrd;
 
-#[derive(Debug)]
-struct Person2 {
-    name: String,
-    height: u8,
-}
-
-impl Person2 {
-    fn from_person(input: Person) -> Self {
-        let Person { name, height , .. } = input;
-
-        Self {
-            name, 
-            height,
-        }
-    }
+//fn compare_and_print<T: Display, U: Display + PartialOrd>(statement: T, num_1: U, num_2: U) {
+fn compare_and_print<T, U>(statement: T, num_1: U, num_2: U) 
+    where 
+        T: Display,
+        U: Display + PartialOrd,
+{
+    println!(
+        "{}! Is {} greater than {}? {}",
+        statement,
+        num_1,
+        num_2,
+        num_1 > num_2
+    );
 }
 
 fn main() {
-    let papa_doc = Person {
-        name: "Papa Doc".to_string(),
-        real_name: "Clarence".to_string(),
-        height: 170,
-        happiness: false,
-    };
-
-    //copy
-    // let Person { name, real_name, height, happiness } = papa_doc;
-    // println!("They call him {} but his real name is {}. He is {} cm tall and is he happy? {}",
-    //     name, real_name, height, happiness);
-
-    let person2 = Person2::from_person(papa_doc);
-    println!("Person2 type is :{:?}", person2);
+    compare_and_print("Listen up!", 9, 8);
 }
 
 
+
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// enum impl blocks
+// Generics
 // /summary/
 
-// #[derive(Debug)]
-// struct Animal {
-//     age: u8,
-//     animal_type : AnimalType
+// generics (Custom type) - concreate (ex. i32, String)
+// "It's a little generic"
+
+// very concreate
+// fn print_and_give_item() -> i32 {
+//     let number = 9;
+//     println!("The number is: {}", number);
+//     9
 // }
 
-// #[derive(Debug)]
-// enum AnimalType {
-//     Cat(String),
-//     Dog(String),
-// }
+// // fn give_thing<GenericType>(input: GenericType) -> GenericType {  // 
+// //     input
+// // }
 
-// impl AnimalType {
-//     fn print_name(&self) {
-//         match self {
-//             AnimalType::Cat(name) => println!("Animal type is cat and name is: {}", name),
-//             AnimalType::Dog(name) => println!("Animal tpye is dog and name is: {}", name),
-//         }
-//     }
+// struct Book;
 
-//     // fn check_type(&self) {
-//     //     use AnimalType::*;
-//     //     match self {
-//     //         Cat => println!("Animal type is cat"),
-//     //         Dog => println!("Animal tpye is dog"),
-//     //     }
-//     // }
-// }
-
-// impl Animal {
-//     fn new(age: u8, animalType: AnimalType) -> Self {  // Self = Animal, function signature
-
-//         Self {
-//             age,
-//             animal_type: animalType,
-//         }
-//     }
-
-//     // fn change_to_dog(&mut self) {
-//     //     self.animal_type = AnimalType::Dog;
-//     //     println!("Changed to dog! No I am: {:?}", self);
-//     // }
-
-//     // fn change_to_cat(&mut self) {
-//     //     self.animal_type = AnimalType::Cat;
-//     //     println!("Changed to cat! No I am: {:?}", self);
-//     // }
+// use std::fmt::Display;
+// //제약 조건
+// fn give_thing<T: Display>(input: T) -> T {  // 
+//     println!("{}", input);
+//     input
 // }
 
 // fn main() {
-//     // use AnimalType::*;
-//     // let my_cat = Animal::new(10, Cat);
-//     // let my_dog = Animal::new(10, Dog);
-
-//     // my_cat.animal_type.check_type();
-//     let my_cat = Animal::new(10, AnimalType::Cat("Windy".to_string()));
-//     my_cat.animal_type.print_name();
+//     let x = print_and_give_item();
+//     let x2 = give_thing(String::from("Take this thing"));
+//     let y = give_thing(9);
+//     let z = give_thing(Book);
+//     println!("{}", x2);
+//     println!("{}", y);
 // }
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// More impl blocks
+// Dereferencing and the dot operator
 // /summary/
 
-// #[derive(Debug)]
-// struct Animal {
-//     age: u8,
-//     animal_type : AnimalType
+// references and the dot operator
+
+// struct Item {
+//     number: u8
 // }
 
-// #[derive(Debug)]
-// enum AnimalType {
-//     Cat,
-//     Dog,
-// }
-
-// // C# Partial와 같은 기능
-// impl Animal {
-//     fn new_old_cat() -> Self {
-//         Self {
-//             age: 15,
-//             animal_type: AnimalType::Cat,
-//         }
+// // . dot operator
+// impl Item {
+//     fn compare_number(&self, other_number: u8) {
+//         println!("Are they equal? {}", self.number == other_number);
 //     }
 // }
 
-// impl Animal {
-//     fn new_cat(age: u8) -> Self {  // Self = Animal, function signature
-
-//         Self {
-//             age,
-//             animal_type: AnimalType::Cat,
-//         }
-//     }
-
-//     fn new_dog(age: u8) -> Self {
-//         Self {
-//             age,
-//             animal_type: AnimalType::Dog,
-//         }
-//     }
-
-//     fn print(&self) {
-//         println!("I am a: {:?}", self);
-//     }
-
-//     fn change_to_dog(&mut self) {
-//         self.animal_type = AnimalType::Dog;
-//         println!("Changed to dog! No I am: {:?}", self);
-//     }
-
-//     fn change_to_cat(&mut self) {
-//         self.animal_type = AnimalType::Cat;
-//         println!("Changed to cat! No I am: {:?}", self);
-//     }
-// }
-
+// // Deref *
 // fn main() {
-//     let mut my_animal = Animal::new_dog(10);  
-//     my_animal.print();                  // dot operator, syntactic sugar
-//     //Animal::print(&my_animal);    // 
-//     my_animal.change_to_cat();
-//     my_animal.change_to_dog();
+//     let item = Item {
+//         number: 10
+//     };
 
-//     let my_old_cat = Animal::new_old_cat();
+//     let reference_item = &item;   // &u8
+//     let other_reference_item = &reference_item;
+
+//     item.compare_number(10);
+//     reference_item.compare_number(10);
+//     other_reference_item.compare_number(10);
+
+//     //println!("{}", reference == 10);
+//     // let my_number = 10;     // i32
+//     // let reference = &my_number; //&i32
+
+//     // println!("Are they the same? {}", my_number == *reference);
 // }

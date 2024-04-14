@@ -1,105 +1,123 @@
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// More generics
+// Result
 // /summary/
 
-use std::fmt::Display;
-use std::cmp::PartialOrd;
+// Option - Maybe there, maybe not
+// Result - May not work
 
-//fn compare_and_print<T: Display, U: Display + PartialOrd>(statement: T, num_1: U, num_2: U) {
-fn compare_and_print<T, U>(statement: T, num_1: U, num_2: U) 
-    where 
-        T: Display,
-        U: Display + PartialOrd,
-{
-    println!(
-        "{}! Is {} greater than {}? {}",
-        statement,
-        num_1,
-        num_2,
-        num_1 > num_2
-    );
+// enum Option<T> { 
+//     None,
+//     Some(T)
+// }
+
+// enum Result<T, E> { 
+//     Ok(T),
+//     Err(E),
+// }
+
+fn check_error(input: i32) -> Result<(), ()> {
+    if input % 2 == 0 {
+        Ok(())
+    } else {
+        Err(())
+    }
 }
+
+// Option
+// .is_some()
+// .is_none()
+
+// Result
+// .is_ok()
+// .is_err()
+// None.unwrap -> panic
+// Err.unwrap -> panic
 
 fn main() {
-    compare_and_print("Listen up!", 9, 8);
+    //let variable = check_error();
+    // if check_error(5).is_ok() {
+    //     println!("It's okay, guys!");
+    // } else {
+    //     println!("It's an error, guys!");
+    // }
+
+    // match check_error(5) {
+    //     Ok(_) => println!("Okay guys"),
+    //     Err(_) => println!("It's an error"),
+    // }
+
+    check_error(5).unwrap()
 }
 
 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // /summary/
-// Generics
+// More Option
 // /summary/
 
-// generics (Custom type) - concreate (ex. i32, String)
-// "It's a little generic"
-
-// very concreate
-// fn print_and_give_item() -> i32 {
-//     let number = 9;
-//     println!("The number is: {}", number);
-//     9
-// }
-
-// // fn give_thing<GenericType>(input: GenericType) -> GenericType {  // 
-// //     input
-// // }
-
-// struct Book;
-
-// use std::fmt::Display;
-// //제약 조건
-// fn give_thing<T: Display>(input: T) -> T {  // 
-//     println!("{}", input);
-//     input
-// }
-
-// fn main() {
-//     let x = print_and_give_item();
-//     let x2 = give_thing(String::from("Take this thing"));
-//     let y = give_thing(9);
-//     let z = give_thing(Book);
-//     println!("{}", x2);
-//     println!("{}", y);
-// }
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////
-// /summary/
-// Dereferencing and the dot operator
-// /summary/
-
-// references and the dot operator
-
-// struct Item {
-//     number: u8
-// }
-
-// // . dot operator
-// impl Item {
-//     fn compare_number(&self, other_number: u8) {
-//         println!("Are they equal? {}", self.number == other_number);
+// fn take_fifth(value: Vec<i32>) -> Option<i32> {
+//     if value.len() < 5 { 
+//        None
+//     } else {
+//         Some(value[4])
 //     }
 // }
 
-// // Deref *
+
 // fn main() {
-//     let item = Item {
-//         number: 10
-//     };
+//     let new_vec = vec![1, 2];
+//     let index = take_fifth(new_vec);    // Option<i32>
 
-//     let reference_item = &item;   // &u8
-//     let other_reference_item = &reference_item;
+//     // .unwrap() - take out what is inside (unsafe)
+//     //println!("{}", index.unwrap());
 
-//     item.compare_number(10);
-//     reference_item.compare_number(10);
-//     other_reference_item.compare_number(10);
+//     // match index {
+//     //     Some(number) => println!("I got a number: {}", number),
+//     //     None => println!("There was nothing inside"),
+//     // }
 
-//     //println!("{}", reference == 10);
-//     // let my_number = 10;     // i32
-//     // let reference = &my_number; //&i32
+//     // Some(number)
+//     // if index.is_some() {    //bool
+//     //     //Option<i32>
+//     //     println!("I got a number: {}", index.unwrap());
+//     // }
 
-//     // println!("Are they the same? {}", my_number == *reference);
+//     // .expect
+//     index.expect("Needed at least five items - make sure Vec has at least five");
+// }
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// /summary/
+// Option
+// /summary/
+
+// pub enum Option<T> {
+//     None,
+//     Some(T),
+// }
+
+
+// fn take_fifth(value: Vec<i32>) -> i32 {  //문제가 발생할 수 있음
+//     value[4]
+// }
+
+// fn take_fifth(value: Vec<i32>) -> Option<i32> {
+//     if value.len() < 5 { 
+//        None
+//     } else {
+//         Some(value[4])
+//     }
+// }
+
+// // wrap in an Option
+
+// fn main() {
+//     let new_vec = vec![1, 2, 4, 7, 8, 10, 10];
+//     let index = take_fifth(new_vec);
+//     println!("{:?}", index);
 // }
